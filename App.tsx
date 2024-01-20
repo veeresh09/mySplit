@@ -20,6 +20,7 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 import HomeScreen from './views/HomeScreen';
+import SignInPage from './views/Login'
 import {NavigationContainer} from '@react-navigation/native';
 import Footer from './components/Footer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -37,7 +38,8 @@ function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
+            <Stack.Navigator initialRouteName="Login">
+              <Stack.Screen name="Login" component={SignInPage} />
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="GroupHome" component={GroupHome} />
             </Stack.Navigator>
