@@ -7,48 +7,117 @@ type NavigationType = {
   navigate: (screen: string) => void;
 };
 
-type FormData = {
-  username: string;
-  password: string;
-};
-
+interface FormData {
+    name: string;
+    mobileNumber: string;
+    email: string;
+    password: string;
+}
+  
+interface FormErrors {
+    name?: string;
+    mobileNumber?: string;
+    email?: string;
+    password?: string;
+}
+  
 // Define the props type
 type SignUpPageProps = {
   navigation: NativeStackNavigationProp<NavigationType>;
 };
 
 const SignUpPage: React.FC<SignUpPageProps> = ({ navigation }) => {
-  const [formData, setFormData] = useState<FormData>({
-    username: '',
-    password: '',
-  });
 
-  const handleInputChange = (text: string, fieldName: keyof FormData) => {
-    setFormData({
-      ...formData,
-      [fieldName]: text,
-    });
-  };
+    const [formData, setFormData] = useState<FormData>({
+        name: '',
+        mobileNumber: '',
+        email: '',
+        password: '',
+      });
+    
+    const handleInputChange = (text: string, fieldName: keyof FormData) => {
+        setFormData({
+          ...formData,
+          [fieldName]: text,
+        });
+        if (formErrors[fieldName]) {
+            setFormErrors({
+              ...formErrors,
+              [fieldName]: undefined,
+            });
+          }
+      
+    };
+    const [formErrors, setFormErrors] = useState<FormErrors>({});
 
-  const handleSignUp = async () => {
-    try {
-      navigation.navigate('Login');
-    } catch (error) {
-      console.error('Error during sign-up:', error);
-    }
-  };
+    const validateForm = (): boolean => {
+        let errors: FormErrors = {};
+    
+        // Add your validation logic here
+        if (!formData.name) errors.name = 'Name is required';
+        if (!formData.mobileNumber) errors.mobileNumber = 'Mobile number is required';
+        if (!formData.email.includes('@')) errors.email = 'Email is invalid';
+        if (formData.password.length < 6) errors.password = 'Password must be at least 6 characters';
+    
+        setFormErrors(errors);
+        return Object.keys(errors).length === 0;
+      };    
+        
+    const handleSignUp = async () => {
+        try {
+          if (validateForm())  {
+            const response = await fetch('http://10.0.2.2:8080/api/users', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(formData),
+            });  
+            const data = await response.json();
+
+            // Check the response status
+            if (response.ok) {
+              // Handle successful signup, e.g., navigate to a different screen
+              console.log('Signup successful', data);
+              navigation.navigate('Login'); // Replace with your screen
+            } else {
+              // Handle errors, e.g., show error message
+              console.log('Signup failed:', data);
+              // Optionally update the UI to reflect the error
+            }
+          }
+        } catch (error) {
+          console.log('Error during sign-up:', error);
+        }
+    };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Sign Up</Text>
       <View style={styles.form}>
-        <Text>Username</Text>
+        <Text>Name</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => handleInputChange(text, 'username')}
-          value={formData.username}
-          placeholder="Username"
+          onChangeText={(text) => handleInputChange(text, 'name')}
+          value={formData.name}
+          placeholder="Enter your name"
         />
+        <Text>Mobile Number</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => handleInputChange(text, 'mobileNumber')}
+          value={formData.mobileNumber}
+          placeholder="Enter your mobile number"
+        />
+        {/* Email Input */}
+        <Text>Email</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => handleInputChange(text, 'email')}
+          value={formData.email}
+          placeholder="Enter your email"
+        />
+        {/* Password Input */}
         <Text>Password</Text>
         <TextInput
           style={styles.input}

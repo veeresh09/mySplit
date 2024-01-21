@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet,TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function SignInPage() {
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -17,26 +17,26 @@ export default function SignInPage() {
   const navigation = useNavigation();
   const handleLogin = async () => {
       try {
-      // Replace this with your API call in React Native
-      // You'll need to use a library like Axios or fetch for network requests
-      // Example: const response = await fetch('http://localhost:3002/api/login', {
-      //            method: 'POST',
-      //            body: JSON.stringify(formData),
-      //            headers: {
-      //              'Content-Type': 'application/json',
-      //            },
-      //          });
+        console.log(formData)
+        const response = await fetch('http://10.0.2.2:8080/api/signin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });  
+        console.log(response)
+        // const data = await response.json();
+        if (response.ok) {
+          // Handle successful signIn, e.g., navigate to a different screen
+          console.log('Signup successful');
+          navigation.navigate('Home'); // Replace with your screen
+        } else {
+          // Handle errors, e.g., show error message
+          console.log('Signup failed:');
+          // Optionally update the UI to reflect the error
+        }
 
-      // Check the response from the server
-      // Example: const data = await response.json();
-      //          if (data.message === 'OK') {
-      //            // Redirect to another page upon successful login
-      //            // Use navigation for navigation actions
-      //          } else {
-      //            // Handle error (e.g., display an error message)
-      //            alert('Invalid username or password');
-      //            console.error('Invalid username or password');
-      //          }
     } catch (error) {
       console.error('Error during login:', error);
     }
@@ -46,12 +46,12 @@ export default function SignInPage() {
     <View style={styles.container}>
       <Text style={styles.header}>Sign In</Text>
       <View style={styles.form}>
-        <Text>Username or email address</Text>
+        <Text>email address</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => handleInputChange(text, 'username')}
-          value={formData.username}
-          placeholder="Username or email"
+          onChangeText={(text) => handleInputChange(text, 'email')}
+          value={formData.email}
+          placeholder="email or email"
         />
         <Text>Password</Text>
         <TextInput
@@ -63,8 +63,12 @@ export default function SignInPage() {
         />
         <Button
           title="Login"
-          onPress={() => navigation.navigate('Home')}
+          onPress={handleLogin}
         />
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+          <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
+        </TouchableOpacity>
+
       </View>
     </View>
   );
@@ -90,5 +94,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,
+  },
+  signupText: {
+    marginTop: 20,
+    color: 'blue',
+    textAlign: 'center',
   },
 });
