@@ -11,8 +11,7 @@ type Group = {
     name: string;
     description: string;
   };
-  
-const HomeScreen: React.FC = () => {
+const HomeScreen: React.FC<{ route: any }> = ({ route }) => {
     const navigation = useNavigation();
     const initialGroups: Group[] = [
         { id: 1, name: 'Group 1', description: 'Description for Group 1' },
