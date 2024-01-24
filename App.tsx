@@ -15,6 +15,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import { Provider } from 'react-redux';
 
 import {
   Colors,
@@ -26,6 +27,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import Footer from './components/Footer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import GroupHome from './views/GroupHome';
+import { store } from './store/store';
 
 
 const Stack = createNativeStackNavigator();
@@ -38,14 +40,16 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <NavigationContainer>
-            <Stack.Navigator initialRouteName="Login">
-              <Stack.Screen name="Login" component={SignInPage} />
-              <Stack.Screen name="SignUp" component={SignUpPage} />
-              <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="GroupHome" component={GroupHome} />
-            </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+              <Stack.Navigator initialRouteName="Login">
+                <Stack.Screen name="Login" component={SignInPage} />
+                <Stack.Screen name="SignUp" component={SignUpPage} />
+                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="GroupHome" component={GroupHome} />
+              </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
