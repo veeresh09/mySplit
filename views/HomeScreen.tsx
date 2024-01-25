@@ -1,24 +1,25 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Footer from '../components/Footer';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import {Group} from '../interfaces'
 
-// Defining the type for a group
-type Group = {
-    id: number;
-    name: string;
-    description: string;
-  };
 const HomeScreen: React.FC<{ route: any }> = ({ route }) => {
     const navigation = useNavigation();
-    const initialGroups: Group[] = [
+    const reduxUserGroups = useSelector((state: RootState) => state.user.groups);
+    var initialGroups: Group[] = [
         { id: 1, name: 'Group 1', description: 'Description for Group 1' },
         { id: 2, name: 'Group 2', description: 'Description for Group 2' },
         { id: 3, name: 'Group 3', description: 'Description for Group 3' },
       ];
     
+    if (reduxUserGroups.length > 0) {
+      initialGroups = reduxUserGroups
+    }       
     const [groups, setGroups] = useState<Group[]>(initialGroups);
     const addNewGroup = (): void => {
         const newGroup: Group = {

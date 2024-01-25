@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { View, Text, TextInput, Button, StyleSheet,TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { setUser } from '../models/userSlice';
+import { User ,Group} from '../interfaces';
+import { RootState } from '../store/store';
+
 
 export default function SignInPage() {
   const [formData, setFormData] = useState({
@@ -15,6 +20,8 @@ export default function SignInPage() {
     });
   };
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
   const handleLogin = async () => {
       try {
         console.log(formData)
@@ -30,10 +37,12 @@ export default function SignInPage() {
         if (response.ok) {
           // Handle successful signIn, e.g., navigate to a different screen
           console.log('Signup successful');
-          navigation.navigate('Home'); // Replace with your screen
+          const userData: User = await getUserData();
+          dispatch(setUser(userData));      
+          navigation.navigate('Home'); 
         } else {
           // Handle errors, e.g., show error message
-          console.log('Signup failed:');
+          console.log('Login failed');
           // Optionally update the UI to reflect the error
         }
 
@@ -101,3 +110,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+async function getUserData(): Promise<User> {
+  const initialGroups: Group[] = [
+    { id: 1, name: 'Group 1', description: 'Redux for Group 1' },
+    { id: 2, name: 'Group 2', description: 'Redux for Group 2' },
+  ];
+
+  // Fetch logic here
+  return {
+      name: 'Jane Doe',
+      email: 'jane@example.com',
+      phoneNumber: '123-456-7890',
+      groups: initialGroups,
+      friends: ['friend1', 'friend2']
+  };
+};
+
