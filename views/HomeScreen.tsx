@@ -26,7 +26,7 @@ const HomeScreen: React.FC<{ route: any }> = ({ route }) => {
   const GroupCard: React.FC<{ name: string; description: string }> = ({ name, description }) => (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate('GroupHome', { groupName: name })}>
+      onPress={() => navigation.navigate('GroupHome', { groupName: name, groupId: '65a5b97758f2ceb52b944296' })}>
       <Text style={styles.title}>{name}</Text>
       <Text>{description}</Text>
     </TouchableOpacity>
