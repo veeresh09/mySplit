@@ -20,3 +20,8 @@ export interface Group {
     name: string;
     description: string;
 }
+
+export interface AddGroupAction {
+    type: 'ADD_GROUP';
+    payload: Group;
+}

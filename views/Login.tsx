@@ -1,19 +1,19 @@
-import React, { useState, useEffect} from 'react';
-import { View, Text, TextInput, Button, StyleSheet,TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { setUser } from '../models/userSlice';
-import { User ,Group} from '../interfaces';
+import { User, Group } from '../interfaces';
 import { RootState } from '../store/store';
 
 
 export default function SignInPage() {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: 'onechance@2024.com',
+    password: 'split@1234',
   });
 
-  const handleInputChange = (text:string, fieldName:string) => {
+  const handleInputChange = (text: string, fieldName: string) => {
     setFormData({
       ...formData,
       [fieldName]: text,
@@ -23,28 +23,28 @@ export default function SignInPage() {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const handleLogin = async () => {
-      try {
-        console.log(formData)
-        const response = await fetch('http://10.0.2.2:8080/api/signin', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });  
-        console.log(response)
-        // const data = await response.json();
-        if (response.ok) {
-          // Handle successful signIn, e.g., navigate to a different screen
-          console.log('Signup successful');
-          const userData: User = await getUserData();
-          dispatch(setUser(userData));      
-          navigation.navigate('Home'); 
-        } else {
-          // Handle errors, e.g., show error message
-          console.log('Login failed');
-          // Optionally update the UI to reflect the error
-        }
+    try {
+      console.log(formData)
+      const response = await fetch('http://10.0.2.2:8080/api/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      console.log(response)
+      // const data = await response.json();
+      if (response.ok) {
+        // Handle successful signIn, e.g., navigate to a different screen
+        console.log('Signup successful');
+        const userData: User = await getUserData();
+        dispatch(setUser(userData));
+        navigation.navigate('Home');
+      } else {
+        // Handle errors, e.g., show error message
+        console.log('Login failed');
+        // Optionally update the UI to reflect the error
+      }
 
     } catch (error) {
       console.error('Error during login:', error);
@@ -119,11 +119,11 @@ async function getUserData(): Promise<User> {
 
   // Fetch logic here
   return {
-      name: 'Jane Doe',
-      email: 'jane@example.com',
-      phoneNumber: '123-456-7890',
-      groups: initialGroups,
-      friends: ['friend1', 'friend2']
+    name: 'Jane Doe',
+    email: 'jane@example.com',
+    phoneNumber: '123-456-7890',
+    groups: initialGroups,
+    friends: ['friend1', 'friend2']
   };
 };
 
