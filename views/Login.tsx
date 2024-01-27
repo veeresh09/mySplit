@@ -24,7 +24,6 @@ export default function SignInPage() {
   const user = useSelector((state: RootState) => state.user);
   const handleLogin = async () => {
     try {
-      console.log(formData)
       const response = await fetch('http://10.0.2.2:8080/api/signin', {
         method: 'POST',
         headers: {
@@ -33,11 +32,23 @@ export default function SignInPage() {
         body: JSON.stringify(formData),
       });
       console.log(response)
-      // const data = await response.json();
       if (response.ok) {
-        // Handle successful signIn, e.g., navigate to a different screen
         console.log('Signup successful');
-        const userData: User = await getUserData();
+        const responseData = await response.json();
+        console.log('Login successful', responseData);
+
+        const userData: User = {
+          name: responseData.userName,
+          email: responseData.email,
+          phoneNumber: '',
+          groups: responseData.groups.map((group: any) => ({
+            id: group.ID,
+            name: group.Name,
+            description: '',
+            creator: group.Creator
+          })),
+          friends: [],
+        };
         dispatch(setUser(userData));
         navigation.navigate('Home');
       } else {
@@ -110,20 +121,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-async function getUserData(): Promise<User> {
-  const initialGroups: Group[] = [
-    { id: 1, name: 'Group 1', description: 'Redux for Group 1' },
-    { id: 2, name: 'Group 2', description: 'Redux for Group 2' },
-  ];
-
-  // Fetch logic here
-  return {
-    name: 'Jane Doe',
-    email: 'jane@example.com',
-    phoneNumber: '123-456-7890',
-    groups: initialGroups,
-    friends: ['friend1', 'friend2']
-  };
-};
-

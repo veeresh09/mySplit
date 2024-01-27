@@ -19,6 +19,7 @@ export interface Group {
     id: number;
     name: string;
     description: string;
+    creator: string;
 }
 
 export interface AddGroupAction {
