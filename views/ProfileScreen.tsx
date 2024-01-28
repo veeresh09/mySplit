@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootState } from '../store/store'; // Import RootState type
 import { logoutUser } from '../models/userSlice';
 import { User } from '../interfaces'; // Import your User interface
-
+import { RootStackParamList } from '../path/to/NavigationTypes';
 const ProfileScreen: React.FC = () => {
     const user = useSelector((state: RootState) => state.user as User);
     const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const ProfileScreen: React.FC = () => {
 
     const handleLogout = () => {
         dispatch(logoutUser());
-        navigation.navigate('Login'); // Replace with your login screen name
+        navigation.navigate('SignInPage'); // Replace with your login screen name
     };
 
     return (

@@ -30,22 +30,9 @@ import GroupHome from './views/GroupHome';
 import { store } from './store/store';
 import ProfileScreen from './views/ProfileScreen';
 import AddExpense from './views/AddExpense';
+import { RootStackParamList } from './path/to/NavigationTypes';
 
-const Stack = createNativeStackNavigator();
-type RootStackParamList = {
-  HomeScreen: undefined; // If no parameters are passed to Home screen
-  GroupHome: {
-    groupName: string;
-    groupId: string;
-  };
-  AddExpense:{
-    groupId: string;
-  };
-  SignInPage: undefined;
-  SignUpPage: undefined;
-  ProfileScreen: undefined;
-  // Define types for other screens as needed
-};
+const Stack = createNativeStackNavigator<RootStackParamList>();
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 

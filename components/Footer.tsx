@@ -16,11 +16,11 @@ const Footer: React.FC = () => {
                 <Text style={styles.buttonText}>Random</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('HomeScreen')}>
                 <Icon name="home" size={30} color="white" />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Profile')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ProfileScreen')}>
                 <Icon name="user" size={30} color="white" />
             </TouchableOpacity>
         </View>

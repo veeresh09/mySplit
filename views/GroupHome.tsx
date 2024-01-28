@@ -11,13 +11,13 @@ type Expense = {
   // Add other fields as per your expense structure
 };
 type GroupHomeProps = {
-  route: RouteProp<RootStackParamList, 'GroupHome'>;
+  route: RouteProp<RootStackParamList, "GroupHome">;
 };
 
 const GroupHome: React.FC<GroupHomeProps> = ({ route }) => {
   const [expenses, setExpenses] = useState<Expense[]>([]); // State to store expenses
   const { groupId } = route.params;
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   useEffect(() => {
     // Fetch expenses for the group when the component mounts
     fetchExpenses();

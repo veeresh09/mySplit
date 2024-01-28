@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TextInputChangeEventData, NativeSyntheticEvent } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-// Define types for your navigation and form data
-type NavigationType = {
-  navigate: (screen: string) => void;
-};
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../path/to/NavigationTypes';
+import { RouteProp } from '@react-navigation/native';
 
 interface FormData {
     name: string;
@@ -23,10 +20,10 @@ interface FormErrors {
   
 // Define the props type
 type SignUpPageProps = {
-  navigation: NativeStackNavigationProp<NavigationType>;
+  route: RouteProp<RootStackParamList, "SignUpPage">;
 };
 
-const SignUpPage: React.FC<SignUpPageProps> = ({ navigation }) => {
+const SignUpPage: React.FC<SignUpPageProps> = ({ route }) => {
 
     const [formData, setFormData] = useState<FormData>({
         name: '',
@@ -64,6 +61,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ navigation }) => {
       };    
         
     const handleSignUp = async () => {
+      const navigation = useNavigation<any>();
         try {
           if (validateForm())  {
             const response = await fetch('http://10.0.2.2:8080/api/users', {
@@ -79,7 +77,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ navigation }) => {
             if (response.ok) {
               // Handle successful signup, e.g., navigate to a different screen
               console.log('Signup successful', data);
-              navigation.navigate('Login'); // Replace with your screen
+              navigation.navigate('SignInPage'); // Replace with your screen
             } else {
               // Handle errors, e.g., show error message
               console.log('Signup failed:', data);
