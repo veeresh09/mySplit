@@ -23,11 +23,12 @@ import {
 import HomeScreen from './views/HomeScreen';
 import SignInPage from './views/Login'
 import SignUpPage from './views/SignUp'
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import Footer from './components/Footer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import GroupHome from './views/GroupHome';
 import { store } from './store/store';
+import ProfileScreen from './views/ProfileScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -42,12 +43,13 @@ function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <NavigationContainer>
-              <Stack.Navigator initialRouteName="Login">
-                <Stack.Screen name="Login" component={SignInPage} />
-                <Stack.Screen name="SignUp" component={SignUpPage} />
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="GroupHome" component={GroupHome} />
-              </Stack.Navigator>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={SignInPage} />
+          <Stack.Screen name="SignUp" component={SignUpPage} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="GroupHome" component={GroupHome} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+        </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    flex: 1, 
+    flex: 1,
   },
 
 });

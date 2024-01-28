@@ -22,11 +22,14 @@ export const userSlice = createSlice({
         addGroup: (state, action: PayloadAction<Group>) => {
             state.groups.push(action.payload);
         },
+        logoutUser: (state) => {
+            return { ...initialState }; // Reset to initial state
+        },
     }
 });
 
 // Export the action creator
-export const { setUser, addGroup } = userSlice.actions;
+export const { setUser, addGroup, logoutUser } = userSlice.actions;
 
 // Export the reducer
 export default userSlice.reducer;

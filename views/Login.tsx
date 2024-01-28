@@ -19,7 +19,7 @@ export default function SignInPage() {
       [fieldName]: text,
     });
   };
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const handleLogin = async () => {

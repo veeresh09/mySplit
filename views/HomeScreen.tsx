@@ -10,7 +10,7 @@ import { Group } from '../interfaces'
 import { addGroup } from '../models/userSlice'; // Import the action creator
 
 const HomeScreen: React.FC<{ route: any }> = ({ route }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const dispatch = useDispatch();
   const reduxUserGroups = useSelector((state: RootState) => state.user.groups);
   const userEmail = useSelector((state: RootState) => state.user.email);
