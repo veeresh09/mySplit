@@ -4,6 +4,7 @@ import { User,Group } from '../interfaces';
 
 // Define the initial state using the `User` type
 const initialState: User = {
+    id:'',
     name: '',
     email: '',
     phoneNumber: '',

@@ -2,6 +2,7 @@ import { SET_USER } from "../components/types";
 
 // interfaces/index.ts
 export interface User {
+    id: string;
     name: string;
     email: string;
     phoneNumber: string;

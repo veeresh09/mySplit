@@ -44,6 +44,7 @@ export default function SignInPage() {
         })) : [];
 
         const userData: User = {
+          id: responseData.userId,
           name: responseData.userName,
           email: responseData.email,
           phoneNumber: '',
