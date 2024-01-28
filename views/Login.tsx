@@ -36,17 +36,18 @@ export default function SignInPage() {
         console.log('Signup successful');
         const responseData = await response.json();
         console.log('Login successful', responseData);
+        const groupsFromResponse = responseData.groups ? responseData.groups.map((group: any) => ({
+          id: group.ID,
+          name: group.Name,
+          description: '',
+          creator: group.Creator
+        })) : [];
 
         const userData: User = {
           name: responseData.userName,
           email: responseData.email,
           phoneNumber: '',
-          groups: responseData.groups.map((group: any) => ({
-            id: group.ID,
-            name: group.Name,
-            description: '',
-            creator: group.Creator
-          })),
+          groups: groupsFromResponse,
           friends: [],
         };
         dispatch(setUser(userData));
