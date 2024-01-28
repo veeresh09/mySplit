@@ -29,10 +29,23 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import GroupHome from './views/GroupHome';
 import { store } from './store/store';
 import ProfileScreen from './views/ProfileScreen';
-
+import AddExpense from './views/AddExpense';
 
 const Stack = createNativeStackNavigator();
-
+type RootStackParamList = {
+  HomeScreen: undefined; // If no parameters are passed to Home screen
+  GroupHome: {
+    groupName: string;
+    groupId: string;
+  };
+  AddExpense:{
+    groupId: string;
+  };
+  SignInPage: undefined;
+  SignUpPage: undefined;
+  ProfileScreen: undefined;
+  // Define types for other screens as needed
+};
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -43,17 +56,19 @@ function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login" component={SignInPage} />
-          <Stack.Screen name="SignUp" component={SignUpPage} />
-          <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Navigator initialRouteName="SignInPage">
+          <Stack.Screen name="SignInPage" component={SignInPage} />
+          <Stack.Screen name="SignUpPage" component={SignUpPage} />
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="GroupHome" component={GroupHome} />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="AddExpense" component={AddExpense} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
 }
+
 
 const styles = StyleSheet.create({
   sectionContainer: {

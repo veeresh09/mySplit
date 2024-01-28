@@ -51,7 +51,7 @@ export default function SignInPage() {
           friends: [],
         };
         dispatch(setUser(userData));
-        navigation.navigate('Home');
+        navigation.navigate('HomeScreen');
       } else {
         // Handle errors, e.g., show error message
         console.log('Login failed');
@@ -86,7 +86,7 @@ export default function SignInPage() {
           title="Login"
           onPress={handleLogin}
         />
-        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUpPage')}>
           <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
         </TouchableOpacity>
 

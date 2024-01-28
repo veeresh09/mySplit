@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../path/to/NavigationTypes';
 // Define types for your expense items
 type Expense = {
   ID: string;
@@ -8,20 +10,14 @@ type Expense = {
   Amount: number;
   // Add other fields as per your expense structure
 };
-
 type GroupHomeProps = {
-  route: {
-    params: {
-      groupName: string;
-      groupId : string;
-      // Include other route parameters if necessary
-    }
-  }
+  route: RouteProp<RootStackParamList, 'GroupHome'>;
 };
 
 const GroupHome: React.FC<GroupHomeProps> = ({ route }) => {
   const [expenses, setExpenses] = useState<Expense[]>([]); // State to store expenses
   const { groupId } = route.params;
+  const navigation = useNavigation<[string, { groupId: string; }]>();
   useEffect(() => {
     // Fetch expenses for the group when the component mounts
     fetchExpenses();
@@ -49,9 +45,9 @@ const GroupHome: React.FC<GroupHomeProps> = ({ route }) => {
   );
 
   const addExpense = () => {
-    // Navigate to Add Expense screen or handle addition
+    const groupId = "";
+    navigation.navigate('AddExpense', { groupId: '65a5b97758f2ceb52b944296' });
   };
-
   const addUser = () => {
     // Navigate to Add User screen or handle user addition
   };
