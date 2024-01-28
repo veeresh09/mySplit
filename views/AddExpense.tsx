@@ -20,7 +20,7 @@ const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ route, navigation }
   const [formData, setFormData] = useState<ExpenseFormData>({ description: '', amount: '' });
   const dispatch = useDispatch();
   //const reduxUserGroups = useSelector((state: RootState) => state.user.groups);
-  const userEmail = useSelector((state: RootState) => state.user.email);
+  const userId = useSelector((state: RootState) => state.user.id);
   const handleSubmit = async () => {
     if (!formData.description || !formData.amount) {
       Alert.alert('Error', 'Please fill in all fields');
@@ -30,7 +30,7 @@ const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ route, navigation }
     // Construct the expense data
     const expenseData = {
       GroupID: groupId,
-      PaidBy: userEmail,
+      PaidBy: '',
       Amount: parseFloat(formData.amount),
       Description: formData.description,
       Split: [], // Add logic for handling ExpenseSplit

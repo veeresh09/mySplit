@@ -17,7 +17,7 @@ type GroupHomeProps = {
 const GroupHome: React.FC<GroupHomeProps> = ({ route }) => {
   const [expenses, setExpenses] = useState<Expense[]>([]); // State to store expenses
   const { groupId } = route.params;
-  const navigation = useNavigation<[string, { groupId: string; }]>();
+  const navigation = useNavigation();
   useEffect(() => {
     // Fetch expenses for the group when the component mounts
     fetchExpenses();
