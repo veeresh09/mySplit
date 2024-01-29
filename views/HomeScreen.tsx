@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import { Group } from '../interfaces'
 import { addGroup } from '../models/userSlice'; // Import the action creator
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const HomeScreen: React.FC<{ route: any }> = ({ route }) => {
   const navigation = useNavigation<any>();
@@ -60,29 +61,27 @@ const HomeScreen: React.FC<{ route: any }> = ({ route }) => {
   };
 
   const GroupCard: React.FC<{ name: string; description: string }> = ({ name, description }) => (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() => navigation.navigate('GroupHome', { groupName: name, groupId: '65a5b97758f2ceb52b944296' })}>
-      <Text style={styles.title}>{name}</Text>
-      <Text>{description}</Text>
-    </TouchableOpacity>
+    <View style={styles.groupCard}>
+      <Icon name="users" size={24} color="black" style={{ marginRight: 10 }} />
+      <View style={{ flex: 1 }}>
+        <Text style={styles.groupName}>{name}</Text>
+        <Text style={styles.groupDescription}>{description}</Text>
+      </View>
+      <TouchableOpacity onPress={() => navigation.navigate('GroupHome', { groupName: name })} style={styles.goButton}>
+        <Text style={styles.goButtonText}>Go</Text>
+      </TouchableOpacity>
+    </View>
   );
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View>
-          <View>
-            <Text>Welcome to SplitWise Clone!</Text>
-            {/* Additional components like buttons or links */}
-            <ScrollView>
-              {reduxUserGroups.map(group => (
-                <GroupCard key={group.id} name={group.name} description={group.description} />
-              ))}
-            </ScrollView>
-            <Button title="Add New Group" onPress={() => setModalVisible(true)} />
-          </View>
-        </View>
+      <TouchableOpacity style={styles.addNewGroupButton} onPress={() => setModalVisible(true)}>
+        <Text style={styles.addNewGroupButtonText}>+ Add New Group</Text>
+      </TouchableOpacity>
+      <ScrollView style={styles.scrollView}>
+        {reduxUserGroups.map(group => (
+          <GroupCard key={group.id} name={group.name} description={group.description} />
+        ))}
       </ScrollView>
       <Modal
         animationType="slide"
@@ -116,9 +115,23 @@ const HomeScreen: React.FC<{ route: any }> = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+  addNewGroupButton: {
+    backgroundColor: '#3498DB', // A blue shade for the button
+    marginHorizontal: 16,
+    marginTop: 16,
+    borderRadius: 20,
+    padding: 10,
+    alignItems: 'center',
+  },
+  addNewGroupButtonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
   container: {
     flex: 1,
-    marginTop: 20,
+    backgroundColor: '#ECF0F1', // Lighter background color for the whole screen
   },
   card: {
     backgroundColor: '#f9f9f9',
@@ -184,6 +197,34 @@ const styles = StyleSheet.create({
   },
   descriptionInput: {
     height: 80, // Make the height larger for description
+  },
+  groupCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#FFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#DADFE1',
+  },
+  groupName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  groupDescription: {
+    color: '#666',
+  },
+  goButton: {
+    backgroundColor: '#2ECC71', // A green shade for the button
+    padding: 10,
+    borderRadius: 5,
+  },
+  goButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  scrollView: {
+    flex: 1,
   },
 
 });
