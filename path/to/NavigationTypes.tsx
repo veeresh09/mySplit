@@ -10,4 +10,7 @@ export type RootStackParamList = {
     SignInPage: undefined;
     SignUpPage: undefined;
     ProfileScreen: undefined;
+    AddUserToGroup:{
+      groupId: string;
+    };
 };

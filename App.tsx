@@ -31,6 +31,7 @@ import { store } from './store/store';
 import ProfileScreen from './views/ProfileScreen';
 import AddExpense from './views/AddExpense';
 import { RootStackParamList } from './path/to/NavigationTypes';
+import AddUserToGroupScreen from './views/AddUserstoGroup';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 function App(): React.JSX.Element {
@@ -50,6 +51,7 @@ function App(): React.JSX.Element {
           <Stack.Screen name="GroupHome" component={GroupHome} />
           <Stack.Screen name="AddExpense" component={AddExpense} />
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+          <Stack.Screen name="AddUserToGroup" component={AddUserToGroupScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

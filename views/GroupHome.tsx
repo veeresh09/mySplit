@@ -18,6 +18,7 @@ const GroupHome: React.FC<GroupHomeProps> = ({ route }) => {
   const [expenses, setExpenses] = useState<Expense[]>([]); // State to store expenses
   const { groupId } = route.params;
   const navigation = useNavigation<any>();
+  
   useEffect(() => {
     // Fetch expenses for the group when the component mounts
     fetchExpenses();
@@ -50,6 +51,8 @@ const GroupHome: React.FC<GroupHomeProps> = ({ route }) => {
   };
   const addUser = () => {
     // Navigate to Add User screen or handle user addition
+    const groupId = "";
+    navigation.navigate('AddUserToGroup', { groupId: '65a5b97758f2ceb52b944296' });
   };
 
   return (
